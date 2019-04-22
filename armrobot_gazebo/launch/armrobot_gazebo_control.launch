@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- 启动Gazebo  -->
+    <include file="$(find armrobot_gazebo)/launch/armrobot_world.launch" />   
+
+    <!-- 启动Gazebo controllers -->
+    <include file="$(find armrobot_gazebo)/launch/armrobot_gazebo_controller.launch" />   
+
+</launch>

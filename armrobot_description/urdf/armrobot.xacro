@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<robot name="armrobot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Defining the colors used in this robot -->
+    <material name="Black">
+        <color rgba="0.46 0.5 0.412 1"/>
+    </material>
+
+    <material name="White">
+        <color rgba="0.333 0.4 0 1"/>
+    </material>
+
+    <material name="Blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+
+    <material name="Red">
+        <color rgba="1 0 0 1"/>
+    </material>
+    <material name="Yellow">
+        <color rgba="1 0.502 0 1"/>
+    </material>
+
+    <!-- Constants -->
+    <xacro:property name="M_PI" value="3.1415926"/>
+ 
+
+    <!-- Inertial matrix -->
+    <xacro:macro name="inertial_matrix" params="mass">
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- ///////////////////////////////////////   bottom_joint   ////////////////////////////////////////// -->
+    
+    <link name="base_link">
+      <visual>
+      <origin
+        xyz="-0.055 0.22 0.048856"
+        rpy="0 0 0.365" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/base_link.STL" />
+      </geometry>
+           <material name="White" />
+      </visual>
+    <collision>
+      <origin
+        xyz="-0.055 0.22 0.048856"
+        rpy="0 0 0.365" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="500"/>
+    </link>  
+    <joint name="bottom_joint" type="fixed">
+        <origin
+      xyz="0 0 0"
+      rpy="${M_PI/2} 0 0" />
+        <parent link="base_link"/>
+        <child link="bottom_link"/>
+    </joint>
+    <!-- /////////////////////////////////////   BASE LINK    ////////////////////////////////////////////// -->
+    <link name="bottom_link">
+        <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/Buttom_Link.STL" />
+      </geometry>
+      <material name="Yellow" />
+    </visual>
+        <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/Buttom_Link.STL" />
+      </geometry>
+    </collision>
+    <xacro:inertial_matrix mass="100"/>
+    </link> 
+    <joint name="link1_joint" type="revolute">
+        <parent link="bottom_link"/>
+        <child link="link1"/>
+        <origin
+      xyz="0 0.066 0"
+      rpy="${M_PI} 0 -${M_PI}" />
+       <axis xyz="0 1 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+
+    <!-- /////////////////////////////////////  KINETIC_CAMER  ////////////////////////////////////////////// -->
+    <link name="link1" >
+        <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link1.STL" />
+      </geometry>
+      <material name="Yellow" />
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link1.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+
+    <joint name="link2_joint" type="revolute">
+        <parent link="link1"/>
+        <child link="link2"/>
+        <origin
+      xyz="0 0.1655 0"
+      rpy="-${M_PI} 0.82923 ${M_PI/2}" />
+        <axis xyz="0 1 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+
+    <!-- /////////////////////////////////////  RIGHT_LINK1  ////////////////////////////////////////////// -->
+    <link name="link2" >
+         <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link2.STL" />
+      </geometry>
+      <material name="Yellow" />
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link2.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="link3_joint" type="revolute">
+        <parent link="link2"/>
+        <child link="link3"/>
+        <origin
+      xyz="0 -0.00099213 -0.221"
+      rpy="-2.2792E-15 -1.1034 3.2031E-15" />
+       <axis xyz="0 1 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK1  ////////////////////////////////////////////// -->
+    <link name="link3" >
+        <visual>
+      <origin
+        xyz="-0.128 0 0.0345"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link3.STL" />
+      </geometry>
+      <material name="Yellow" />
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.128 0 0.0345"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link3.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="link4_joint" type="revolute">
+        <parent link="link3"/>
+        <child link="link4"/>
+        <origin
+      xyz="-0.128 0 -0.0004"
+      rpy="${M_PI} 1.5708 -${M_PI/2}" />
+        <axis xyz="0 1 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK2  ////////////////////////////////////////////// -->
+    <link name="link4" >
+        <visual>
+      <origin
+        xyz="-0.0498 0 -0.045"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link4.STL" />
+      </geometry>
+      <material name="Yellow" />
+        </visual>
+    <collision>
+      <origin
+        xyz="-0.0498 0 -0.045"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link4.STL" />
+      </geometry>
+        </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="link5_joint" type="revolute">
+        <parent link="link4"/>
+        <child link="link5"/>
+         <origin
+      xyz="0 0.095 0"
+      rpy="${M_PI/2} -4.4409E-16 0.92098" />
+        <axis xyz="0 1 0" />
+        <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+        <dynamics damping="50" friction="1"/>
+    </joint>
+
+    <!-- /////////////////////////////////////  LEFT_LINK2  ////////////////////////////////////////////// -->
+    <link name="link5" >
+        <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link5.STL" />
+      </geometry>
+      <material name="Yellow" />
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/link5.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link>
+    <joint name="plat_joint" type="revolute">
+        <parent link="link5"/>
+        <child link="plat_link"/>
+        <origin
+      xyz="0 0 -0.042"
+      rpy="${M_PI/2} 0 ${M_PI/2}" />
+    <axis xyz="0 1 0" />
+    <limit effort="300" velocity="1" lower="-${M_PI/2}" upper="${M_PI/2}"/>
+    <dynamics damping="50" friction="1"/>
+        
+    </joint>
+
+    <!-- /////////////////////////////////////  RIGHT_LINK3  ////////////////////////////////////////////// -->
+    <link name="plat_link" >
+       <visual>
+      <origin
+        xyz="0.01 0.066 0.0275"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/plat_link.STL" />
+      </geometry>
+      <material name="Black" />
+    </visual>   
+    <collision>
+      <origin
+        xyz="0.01 0.066 0.0275"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://armrobot_description/meshes/plat_link.STL" />
+      </geometry>
+    </collision>
+        <xacro:inertial_matrix mass="1"/>
+    </link> 
+       <!-- /////////////////////////////////   Gazebo   ////////////////////////////////////// -->
+    
+    <gazebo reference="base_link">
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="bottom_link">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="link1">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="link2">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="link3">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="link4">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    <gazebo reference="link5">
+        <material>Gazebo/Yellow</material>
+    </gazebo>
+    
+    <gazebo reference="plat_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    
+    <!-- Transmissions for ROS Control -->
+    <xacro:macro name="transmission_block" params="joint_name">
+        <transmission name="tran1">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${joint_name}">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="motor1">
+                <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+       
+    <xacro:transmission_block joint_name="link1_joint"/>
+    <xacro:transmission_block joint_name="link2_joint"/>
+    <xacro:transmission_block joint_name="link3_joint"/>
+    <xacro:transmission_block joint_name="link4_joint"/>
+    <xacro:transmission_block joint_name="link5_joint"/>
+    <xacro:transmission_block joint_name="plat_joint"/>
+    
+    <!-- ros_control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/armrobot</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    
+</robot>

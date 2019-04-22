@@ -1,0 +1,14 @@
+controller_manager_ns: controller_manager
+controller_list:
+  - name: armrobot/arm_robot_joint_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+      - link1_joint
+      - link2_joint
+      - link3_joint
+      - link4_joint
+      - link5_joint
+      - plat_joint
+
